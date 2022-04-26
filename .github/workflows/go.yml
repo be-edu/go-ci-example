@@ -5,6 +5,7 @@ name: Go CI Workflow
 
 # Environment variables
 env:
+  HOSTED_RUNNER: windows-latest
   ARTIFACT_NAME: my-artifact
 
 # Triggers to automatically trigger a workflow, use on to define which events can cause the workflow to run. 
@@ -27,7 +28,7 @@ on:
 jobs:
 
   build_test_and_push:
-    runs-on: ubuntu-latest
+    runs-on: $HOSTED_RUNNER
     steps:
     - name: Checkout source code from git repository
       uses: actions/checkout@v2
