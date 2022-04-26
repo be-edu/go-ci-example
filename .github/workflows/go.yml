@@ -1,6 +1,7 @@
-name: Go
+name: Go CI Workflow
 
 on:
+  # Allow manually triggering workflow
   workflow_dispatch:
     inputs:
       logLevel:
@@ -10,35 +11,33 @@ on:
       tags:
         description: 'Test scenario tags' 
   push:
-    branches: [ main ]
+    branches: [ main, dev ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, dev ]
 
 jobs:
 
-  build_and_test:
+  build_test_and_push:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout source code from git repository
+      uses: actions/checkout@v2
 
     - name: Set up Go
       uses: actions/setup-go@v3
       with:
         go-version: '1.17'
       
-    - run: go version
-
-    - name: Show home dir
-      run: |
-        ls -l ~/
-
-    - name: Create artifact directory
-      run: |
-        mkdir ~/artifact
+    - name: Show go version
+      run: go version
 
     - name: Print working directory
       run: |
         pwd
+
+    - name: Create artifact directory
+      run: |
+        mkdir ~/artifact
 
     - name: Build
       run: go build -o ~/artifact
@@ -50,7 +49,8 @@ jobs:
     - name: Run unit tests
       run: go test ./...
       
-    - uses: actions/upload-artifact@v3
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
       with:
         name: my-artifact
         path: ~/artifact/
