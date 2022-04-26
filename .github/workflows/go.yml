@@ -47,14 +47,14 @@ jobs:
 
     - name: Create artifact directory
       run: |
-        mkdir ~/artifact
+        mkdir D:\artifact
 
     - name: Build
-      run: go build -o ~/artifact
+      run: go build -o D:\artifact
       
     - name: Show build
       run: |
-        ls -l ~/artifact
+        dir D:\artifact
 
     - name: Run unit tests
       run: go test ./...
@@ -63,4 +63,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: $ARTIFACT_NAME
-        path: ~/artifact/
+        path: D:\artifact\
