@@ -28,7 +28,7 @@ on:
 jobs:
 
   build_test_and_push:
-    runs-on: $HOSTED_RUNNER
+    runs-on: windows-latest
     steps:
     - name: Checkout source code from git repository
       uses: actions/checkout@v2
