@@ -1,5 +1,13 @@
+# Workflow syntax for GitHub Actions: https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions
+
+# The name of the workflow
 name: Go CI Workflow
 
+# Environment variables
+env:
+  ARTIFACT_NAME: my-artifact
+
+# Triggers to automatically trigger a workflow, use on to define which events can cause the workflow to run. 
 on:
   # Allow manually triggering workflow
   workflow_dispatch:
@@ -15,6 +23,7 @@ on:
   pull_request:
     branches: [ main, dev ]
 
+# A workflow run is made up of one or more jobs, which run in parallel by default.
 jobs:
 
   build_test_and_push:
@@ -52,5 +61,5 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v3
       with:
-        name: my-artifact
+        name: $ARTIFACT_NAME
         path: ~/artifact/
