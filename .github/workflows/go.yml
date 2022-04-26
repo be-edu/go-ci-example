@@ -3,11 +3,6 @@
 # The name of the workflow
 name: Go CI Workflow
 
-# Environment variables
-env:
-  HOSTED_RUNNER: windows-latest
-  ARTIFACT_NAME: my-artifact
-
 # Triggers to automatically trigger a workflow, use on to define which events can cause the workflow to run. 
 on:
   # Allow manually triggering workflow
@@ -47,14 +42,14 @@ jobs:
 
     - name: Create artifact directory
       run: |
-        mkdir D:\artifact
+        mkdir ~/artifact
 
     - name: Build
-      run: go build -o D:\artifact
+      run: go build -o ~/artifact
       
     - name: Show build
       run: |
-        dir D:\artifact
+        ls -l ~/artifact
 
     - name: Run unit tests
       run: go test ./...
@@ -62,5 +57,5 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v3
       with:
-        name: $ARTIFACT_NAME
-        path: D:\artifact\
+        name: my-artifact
+        path: ~/artifact/
